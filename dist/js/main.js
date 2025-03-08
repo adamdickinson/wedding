@@ -259,7 +259,7 @@
             var timeinterval = setInterval(updateClock, 1000);
         }
         // set your wedding date here
-        var deadline = 'November 28 2023 17:30:00 GMT+0300';
+        var deadline = 'February 21 2026 14:30:00 GMT+1000';
         if (countdown) {
             initializeClock('timer', deadline);
         }
