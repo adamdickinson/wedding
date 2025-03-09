@@ -31,82 +31,9 @@
 
     // Form
     var contactForm = function () {
-        var $form = $('#contact-form');
-        const $formInput = $('.form-control');
-
-        $formInput.on('focus blur', (event) => {
-            if ($(event.target).val() === '') {
-                if (event.type === 'focus') {
-                    $(event.target).next('.control-label').addClass('filled');
-                } else if (event.type === 'blur') {
-                    $(event.target)
-                        .next('.control-label')
-                        .removeClass('filled');
-                }
-            }
-        });
-        $form.submit(function (e) {
-            // remove the error class
-            $('.form-group').removeClass('has-error');
-            $('.help-block').remove();
-            var guestsList = [];
-            $('.guest-list input').each(function () {
-                guestsList.push(this.value);
-            });
-            // get the form data
-            var formData = {
-                name: $('input[name="form-name"]').val(),
-                email: $('input[name="form-email"]').val(),
-                attending: $('.switch-field input[type="radio"]:checked').attr(
-                    'id'
-                ),
-                guest: guestsList.join(', '),
-            };
-            // process the form
-            $.ajax({
-                type: 'POST',
-                url: 'form.php',
-                data: formData,
-                dataType: 'json',
-                encode: true,
-            })
-                .done(function (data) {
-                    // handle errors
-                    if (!data.success) {
-                        if (data.errors.name) {
-                            $('#name-field').addClass('has-error');
-                            $('#name-field')
-                                .find('.col-sm-6')
-                                .append(
-                                    '<span class="help-block">' +
-                                        data.errors.name +
-                                        '</span>'
-                                );
-                        }
-                        if (data.errors.email) {
-                            $('#email-field').addClass('has-error');
-                            $('#email-field')
-                                .find('.col-sm-6')
-                                .append(
-                                    '<span class="help-block">' +
-                                        data.errors.email +
-                                        '</span>'
-                                );
-                        }
-                    } else {
-                        // display success message
-                        $form.html(
-                            '<div class="message-success">' +
-                                data.message +
-                                '</div>'
-                        );
-                    }
-                })
-                .fail(function (data) {
-                    // for debug
-                    // console.log(data);
-                });
-            e.preventDefault();
+        document.querySelectorAll('.form-control').forEach((formControl) => {
+            const label = formControl.nextElementSibling
+            if (label) label.classList[formControl.value.length ? 'add' : 'remove']('filled');
         });
     };
 
@@ -265,31 +192,71 @@
         }
     };
 
-    function addGuest() {
-        var addBtn = $('.add-button');
-        var guestInput = $('#form-guest-name');
-        var guestList = $('.guest-list');
+    function refreshRemoveGuestButtons() {
+        var guestForms = document.querySelectorAll('.add-guest-form');
+        const showButton = guestForms.length > 1
+        guestForms.forEach((guestForm) => {
+            guestForm.querySelector('button').style.display = showButton ? 'block' : 'none';
+            guestForm.querySelector('.form-field').className = `form-field col-sm-${showButton ? 4 : 7}`;
+        });
+    };
 
-        addBtn.on('click', function () {
+    function removeGuest(event, guestForm) {
+        event.preventDefault();
+        guestForm.remove();
+        refreshRemoveGuestButtons();
+    };
+
+    function addGuest() {
+        // Prepare template row
+        var blankGuestForm = document.querySelector('.add-guest-form').cloneNode(true);
+        blankGuestForm.querySelectorAll('input').forEach((input) => { input.value = ''; });
+
+        var addGuestButton = document.querySelector('#add-guest')
+        addGuestButton.addEventListener('click', (event) => {
             event.preventDefault();
-            var guestVal = guestInput.val();
-            var appendString =
-                '<div><input class="form-control" type="text" value="' +
-                guestVal +
-                '"/><a href="#" class="remove_field"><i class="fa fa-trash"></i></a></div>';
-            if (guestVal == '') {
-                guestInput.focus();
-            } else {
-                guestList.append(appendString);
-                guestInput.val('');
+            var lastGuestForm = [...document.querySelectorAll('.add-guest-form').values()].pop();
+            let newGuestForm = blankGuestForm.cloneNode(true);
+            lastGuestForm.insertAdjacentElement('afterend', newGuestForm);
+            newGuestForm.querySelector('button').addEventListener('click', (event) => removeGuest(event, newGuestForm));
+
+            newGuestForm.querySelectorAll('.form-control').forEach((formControl) => {
+                const label = formControl.nextElementSibling
+                if (label) {
+                    label.classList[formControl.value.length ? 'add' : 'remove']('filled');
+                    function checkLabel () {
+                        var shouldFloat = formControl === document.activeElement || formControl.value.length;
+                        label.classList[shouldFloat ? 'add' : 'remove']('filled');
+                    };
+                    formControl.addEventListener('change', checkLabel);
+                    formControl.addEventListener('focus', checkLabel);
+                    formControl.addEventListener('blur', checkLabel);
+                }
+            });
+
+            refreshRemoveGuestButtons();
+        });
+
+        var guestForms = document.querySelectorAll('.add-guest-form');
+        guestForms.forEach((guestForm) => {
+            guestForm.querySelector('button').addEventListener('click', (event) => removeGuest(event, guestForm))
+
+        });
+
+        document.querySelectorAll('.form-control').forEach((formControl) => {
+            const label = formControl.nextElementSibling
+            if (label) {
+                label.classList[formControl.value.length ? 'add' : 'remove']('filled');
+                function checkLabel () {
+                    var shouldFloat = formControl === document.activeElement || formControl.value.length;
+                    label.classList[shouldFloat ? 'add' : 'remove']('filled');
+                };
+                formControl.addEventListener('change', checkLabel);
+                formControl.addEventListener('focus', checkLabel);
+                formControl.addEventListener('blur', checkLabel);
             }
         });
-
-        $('.guest-list').on('click', '.remove_field', function (e) {
-            e.preventDefault();
-            $(this).parent('div').remove();
-        });
-    }
+    };
 
     var isotope = function () {
         var $container = $('.grid');
@@ -354,5 +321,6 @@
         addGuest();
         isotope();
         contactForm();
+        refreshRemoveGuestButtons();
     });
 })();
