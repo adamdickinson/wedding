@@ -6,6 +6,8 @@
  */
 :root,
 [data-bs-theme=light] {
+  --theme-green-background: #F2F7EA;
+  --theme-background: #ECEAF7;
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
@@ -260,7 +262,7 @@ h4, .h4 {
 }
 
 h5, .h5 {
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 
 h6, .h6 {
@@ -13497,7 +13499,7 @@ body.offcanvas {
   padding: 3.5em 0;
 }
 .section-gray {
-  background: #e9e9e9;
+  background: var(--theme-background);
 }
 
 .bg {
@@ -13509,7 +13511,7 @@ body.offcanvas {
 }
 
 .heading {
-  margin-bottom: 4em;
+  margin-bottom: 2em;
 }
 .heading.heading-sm {
   margin-bottom: 2em;
@@ -13526,6 +13528,9 @@ body.offcanvas {
   line-height: 1.5;
 }
 @media (min-width: 768px) {
+  .heading {
+    margin-bottom: 4rem;
+  }
   .heading p {
     width: 75%;
     margin-left: auto;
@@ -13860,13 +13865,17 @@ img {
 
 .heart {
   clip-path: url(#heart-clip);
-  width: 12rem;
-  height: 12rem;
+  width: 45vw;
+  height: 45vw;
   object-fit: contain;
+  max-width: 12rem;
+  max-height: 12rem;
 }
 @media (min-width: 992px) {
   .heart {
     display: block;
+    width: 15rem;
+    height: 15rem;
   }
 }
 
@@ -14038,7 +14047,7 @@ only screen and (                min-resolution: 2dppx) {
   padding: 10px 15px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-  background-color: #e9e9e9;
+  background-color: var(--theme-green-background);
 }
 .events-accordion .panel-heading + .panel-collapse > .panel-body {
   padding: 0.125rem 15px 1rem;
@@ -14275,8 +14284,8 @@ only screen and (                min-resolution: 2dppx) {
 }
 
 .section-gray .timeline .timeline-panel::after {
-  border-left-color: #e9e9e9;
-  border-right-color: #e9e9e9;
+  border-left-color: var(--theme-background);
+  border-right-color: var(--theme-background);
 }
 
 /* Gallery */
@@ -14469,7 +14478,7 @@ only screen and (                min-resolution: 2dppx) {
 .counter .icon {
   width: 90px;
   height: 90px;
-  border: 2px solid #e9e9e9;
+  border: 2px solid var(--theme-background);
   display: table;
   text-align: center;
   margin: 0 auto 30px auto;
@@ -14716,7 +14725,7 @@ only screen and (                min-resolution: 2dppx) {
 }
 
 .post-hightlight {
-  border: 4px solid #e9e9e9;
+  border: 4px solid var(--theme-background);
   padding: 30px;
   margin: 10px 0 20px;
   font-size: 20px;
