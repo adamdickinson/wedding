@@ -22,8 +22,6 @@
 
         navbar.addEventListener('click', function (e) {
             if (e.target.classList.contains('nav-link')) {
-                console.log(e.target);
-
                 bsOffcanvas.hide();
             }
         });
@@ -213,19 +211,33 @@
         }
     };
 
-    function refreshRemoveGuestButtons() {
+    function refreshGuests() {
         var guestForms = document.querySelectorAll('.add-guest-form');
         const showButton = guestForms.length > 1
-        guestForms.forEach((guestForm) => {
+        guestForms.forEach((guestForm, index) => {
+            var guestNumber = index + 1
             guestForm.querySelector('button').style.display = showButton ? 'block' : 'none';
             guestForm.querySelector('.form-field').className = `form-field col-sm-${showButton ? 4 : 7}`;
+            guestForm.querySelectorAll('label').forEach((label, labelIndex) => {
+                if (labelIndex === 0) {
+                    label.innerHTML = `Guest ${guestNumber} name`;
+                    label.setAttribute('for', `guest-${guestNumber}-name`)
+                }
+                if (labelIndex === 1) {
+                    label.setAttribute('for', `guest-${guestNumber}-requirements`)
+                }
+            })
+            guestForm.querySelectorAll('input').forEach((input, inputIndex) => {
+                if (inputIndex === 0) input.name = `guest-${guestNumber}-name`
+                if (inputIndex === 1) input.name = `guest-${guestNumber}-requirements`
+            })
         });
     };
 
     function removeGuest(event, guestForm) {
         event.preventDefault();
         guestForm.remove();
-        refreshRemoveGuestButtons();
+        refreshGuest();
     };
 
     function addGuest() {
@@ -255,7 +267,7 @@
                 }
             });
 
-            refreshRemoveGuestButtons();
+            refreshGuests();
         });
 
         var guestForms = document.querySelectorAll('.add-guest-form');
@@ -342,6 +354,6 @@
         addGuest();
         isotope();
         contactForm();
-        refreshRemoveGuestButtons();
+        refreshGuests();
     });
 })();
