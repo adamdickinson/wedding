@@ -35,6 +35,27 @@
             const label = formControl.nextElementSibling
             if (label) label.classList[formControl.value.length ? 'add' : 'remove']('filled');
         });
+
+        var contactForm = document.querySelector('#contact-form');
+        contactForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+
+            fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+                .then(() => {
+                    contactForm.remove();
+                    document.querySelector('#form-success').classList.remove('d-none');
+                })
+                .catch(error => {
+                    contactForm.querySelector('.error-container').classList.remove('d-none');
+                    contactForm.querySelector('.error-message').innerHTML = error.message;
+                });
+        });
     };
 
     // Content way point

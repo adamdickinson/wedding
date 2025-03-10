@@ -13813,19 +13813,10 @@ img {
 }
 
 .heart {
-  position: absolute;
-  top: 3em;
-  left: 0;
-  right: 0;
-  z-index: 99;
-  display: none;
-}
-.heart i {
-  font-size: 20px;
-  padding: 20px;
-  color: #000;
-  -webkit-animation: pulse 1s ease infinite;
-          animation: pulse 1s ease infinite;
+  clip-path: url(#heart-clip);
+  width: 12rem;
+  height: 12rem;
+  object-fit: contain;
 }
 @media (min-width: 992px) {
   .heart {
@@ -14742,4 +14733,7 @@ only screen and (                min-resolution: 2dppx) {
   color: #000;
 }
 
+.error-message:empty {
+  display: none;
+}
 /*# sourceMappingURL=main.css.map */
