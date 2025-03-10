@@ -13553,6 +13553,54 @@ body.offcanvas {
   height: 100vh;
   padding-bottom: 80px;
 }
+.display-t .display-tc h1 {
+  font-size: 18vmin;
+  line-height: 1;
+}
+
+.display-tc .banner-text {
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.banner-text .banner-text_names {
+  display: block;
+  line-height: 1;
+  padding-top: 0.75rem;
+  font-size: 3.25rem;
+}
+
+.banner-text_city, .banner-text_date {
+  width: 100%;
+}
+
+.display-tc br {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .display-tc br {
+    display: inherit;
+  }
+
+  .display-tc .banner-text {
+    flex-direction: row;
+  }
+
+  .display-t .display-tc h1 {
+    font-size: 7.5rem;
+  }
+
+  .banner-text_city {
+    text-align: right;
+    width: auto;
+  }
+
+  .banner-text_date {
+    text-align: left;
+    width: auto;
+  }
+}
+
 
 .display-tc h1, .display-tc .h1,
 .display-tc h2,
@@ -13747,8 +13795,6 @@ img {
 }
 .banner-text_names {
   font-family: "Great Vibes", cursive;
-  font-size: 40px;
-  line-height: 43px;
   position: relative;
 }
 .banner-text_names::before, .banner-text_names::after {
