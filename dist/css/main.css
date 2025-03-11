@@ -13955,14 +13955,17 @@ only screen and (                min-resolution: 2dppx) {
   }
 }
 .countdown .heading {
-  margin-bottom: 4em;
+  margin: 4rem 0;
 }
 .countdown .heading h2, .countdown .heading .h2 {
-  font-size: 5rem;
+  font-size: 4rem;
 }
 @media (min-width: 768px) {
+  .countdown .heading {
+    margin: 0 0 5rem 0;
+  }
   .countdown .heading h2, .countdown .heading .h2 {
-  font-size: 5rem;
+    font-size: 5rem;
   }
 }
 .countdown .heading h2, .countdown .heading .h2,
