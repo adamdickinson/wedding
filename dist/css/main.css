@@ -6,7 +6,6 @@
  */
 :root,
 [data-bs-theme=light] {
-  --theme-green-background: #F2F7EA;
   --theme-background: #ECEAF7;
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -13520,7 +13519,7 @@ body.offcanvas {
   margin-bottom: 10px;
   line-height: 1.5;
   font-family: "Great Vibes", cursive;
-  font-size: 50px;
+  font-size: 3rem;
   color: #000;
 }
 .heading p {
@@ -13530,6 +13529,9 @@ body.offcanvas {
 @media (min-width: 768px) {
   .heading {
     margin-bottom: 4rem;
+  }
+  .heading h2, .heading .h2 {
+    font-size: 4rem;
   }
   .heading p {
     width: 75%;
@@ -13571,7 +13573,7 @@ body.offcanvas {
   display: block;
   line-height: 1;
   padding-top: 0.75rem;
-  font-size: 3.25rem;
+  font-size: 2.5rem;
 }
 
 .banner-text_city, .banner-text_date {
@@ -13583,6 +13585,10 @@ body.offcanvas {
 }
 
 @media (min-width: 768px) {
+  .banner-text .banner-text_names {
+    font-size: 3.25rem;
+  }
+
   .display-tc br {
     display: inherit;
   }
@@ -13801,15 +13807,18 @@ img {
 .banner-text_names {
   font-family: "Great Vibes", cursive;
   position: relative;
+  font-size: 1.5rem;
 }
-.banner-text_names::before, .banner-text_names::after {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 2px;
-  height: 100%;
-  top: 0;
-  background-color: #fff;
+@media (min-width: 768px) {
+  .banner-text_names::before, .banner-text_names::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    top: 0;
+    background-color: #fff;
+  }
 }
 .banner-text_names::before {
   left: -1px;
@@ -14050,7 +14059,7 @@ only screen and (                min-resolution: 2dppx) {
   padding: 10px 15px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-  background-color: var(--theme-green-background);
+  background-color: var(--theme-background);
 }
 .events-accordion .panel-heading + .panel-collapse > .panel-body {
   padding: 0.125rem 15px 1rem;
